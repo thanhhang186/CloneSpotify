@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".home.view.SettingFragment">
+
+    <RelativeLayout
+        android:id="@+id/relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/padding_cus_toolbar">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_back"
+            android:foregroundGravity="center" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/btn_back"
+            android:text="@string/setting"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+            android:textSize="24sp"
+            />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_below="@id/relative_layout"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_side"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/btn_sign_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:text="@string/sign_out"/>
+        <TextView
+            android:id="@+id/tv_status_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorGray"
+            android:textSize="14sp"
+            android:text="@string/status_sign_in"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+        <TextView
+            android:id="@+id/btn_list_device"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:text="@string/device_list"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorGray"
+            android:textSize="14sp"
+            android:text="@string/tv_device_list"/>
+    </LinearLayout>
+
+</RelativeLayout>

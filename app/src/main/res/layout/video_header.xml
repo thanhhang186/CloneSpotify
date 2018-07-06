@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:background="@color/background"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/title_header"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/arima_madurai_bold"
+            android:text="@string/title_video_rec"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:transitionName="@string/detail_video_title_transition" />
+        <ImageView
+            android:id="@+id/btn_show_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_drop_down"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/title"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/view_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-condensed"
+        android:maxLines="2"
+        android:text="340 lượt xem"
+        android:textColor="@color/colorWhite"
+        android:textSize="12sp"
+        android:transitionName="@string/detail_video_content_transition" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorGray" />
+    <TextView
+        android:id="@+id/description_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/description_video_rec"
+        android:textSize="12dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorWhite"
+        android:visibility="gone"/>
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorGray"
+        android:visibility="gone"/>
+</LinearLayout>

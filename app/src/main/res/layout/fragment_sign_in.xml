@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="@color/colorWhite"
+tools:context=".sign.view.SignInFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/padding_cus_toolbar"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:id="@+id/sign_in_back"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginTop="5dp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/ic_back_black"
+            android:foregroundGravity="center" />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="25dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:fontFamily="@font/arima_madurai_bold"
+            android:text="@string/sign_in"
+            android:textSize="40sp" />
+
+        <EditText
+            android:id="@+id/edt_login_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_side"
+            android:background="@drawable/round_edt"
+            android:hint="Your email"
+            android:padding="@dimen/padding_edt" />
+
+        <EditText
+            android:id="@+id/edt_login_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_side"
+            android:background="@drawable/round_edt"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="@dimen/padding_edt" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_side">
+            <Button
+                android:id="@+id/btn_sign_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_sign_in_btn"
+                android:text="@string/sign_in"
+                android:textColor="@color/colorWhite" />
+            <TextView
+                android:id="@+id/sign_in_frag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_alignParentRight="true"
+                android:text="@string/registerAcount"
+                android:textSize="15sp" />
+        </RelativeLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="20dp"
+            android:indeterminateDrawable="@drawable/custom_progress"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>
