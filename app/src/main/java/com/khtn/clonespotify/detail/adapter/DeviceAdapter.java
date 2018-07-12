@@ -1,4 +1,4 @@
-package com.khtn.clonespotify.home.adapter;
+package com.khtn.clonespotify.detail.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -21,13 +21,24 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DeviceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DeviceAdapter extends DeviceAbstract  {
     private Context context;
     private List<Device> devices;
 
     public DeviceAdapter(List<Device> devices) {
         this.devices = devices;
     }
+
+    @Override
+    public List<Device> getDevices() {
+        return this.devices;
+    }
+
+    @Override
+    public void setDevices(List<Device> devices) {
+        this.devices = devices;
+    }
+
     public class DeviceViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.tv_name_device)
         TextView nameDevice;

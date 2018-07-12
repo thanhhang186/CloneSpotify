@@ -10,14 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.khtn.clonespotify.LaunchFragment;
 import com.khtn.clonespotify.MainActivity;
 import com.khtn.clonespotify.R;
 import com.khtn.clonespotify.home.view.HomeActivity;
+import com.khtn.clonespotify.sign.presenter.SignInPresenter;
+import com.khtn.clonespotify.sign.presenter.SignInPresenterImpl;
+import com.khtn.clonespotify.sign.presenter.SignUpPresenter;
+import com.khtn.clonespotify.sign.presenter.SignUpPresenterImpl;
 import com.khtn.clonespotify.utils.Utils;
 
 import butterknife.BindInt;
@@ -35,17 +41,25 @@ public class SignInFragment extends Fragment implements SignInView {
     TextView btnToSignUpFrag;
     @BindView(R.id.btn_sign_in)
     Button btnSignIn;
+    @BindView(R.id.edt_login_email)
+    EditText edtEmail;
+    @BindView(R.id.edt_login_pass)
+    EditText edtPassword;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+    private SignInPresenter signInPresenter;
+    private FirebaseAuth auth;
     public SignInFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
         ButterKnife.bind(this,view);
+        auth = FirebaseAuth.getInstance();
+        signInPresenter = new SignInPresenterImpl(getActivity(), auth);
+        signInPresenter.attachView(this);
         return view;
     }
 
@@ -63,14 +77,9 @@ public class SignInFragment extends Fragment implements SignInView {
             loadSignUpFragment();
         });
         btnSignIn.setOnClickListener(v->{
-            loadHomeAct();
+            signInPresenter.signIn(edtEmail.getText().toString(), edtPassword.getText().toString());
         });
 
-    }
-
-    private void loadHomeAct() {
-        Intent intent = new Intent(getActivity(), HomeActivity.class);
-        startActivity(intent);
     }
 
     private void loadSignUpFragment() {
@@ -87,7 +96,7 @@ public class SignInFragment extends Fragment implements SignInView {
 
     @Override
     public void showVadidationError() {
-
+            Utils.showMessage(getActivity(), "Please enter a valid email address and password !");
     }
 
     @Override
@@ -113,5 +122,11 @@ public class SignInFragment extends Fragment implements SignInView {
     @Override
     public void isLogin(boolean isLogin) {
 
+    }
+
+    @Override
+    public void loadHomeAct() {
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        startActivity(intent);
     }
 }

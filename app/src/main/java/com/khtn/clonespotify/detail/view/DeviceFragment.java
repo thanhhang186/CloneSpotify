@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.khtn.clonespotify.R;
-import com.khtn.clonespotify.home.adapter.DeviceAdapter;
+import com.khtn.clonespotify.detail.adapter.DeviceAdapter;
+import com.khtn.clonespotify.detail.presenter.DevicePresenter;
+import com.khtn.clonespotify.detail.presenter.DevicePresenterImpl;
 import com.khtn.clonespotify.model.Device;
 
 import java.util.ArrayList;
@@ -38,7 +41,8 @@ public class DeviceFragment extends Fragment {
     RecyclerView listDevice;
     private List<Device> devices;
     private DeviceAdapter deviceAdapter;
-
+    private DevicePresenter devicePresenter;
+    private FirebaseAuth auth;
     public DeviceFragment() {
     }
 
@@ -53,14 +57,10 @@ public class DeviceFragment extends Fragment {
     }
 
     private void initData() {
-        devices = new ArrayList<>();
-        devices.add(new Device());
-        devices.add(new Device());
-        devices.add(new Device());
-        devices.add(new Device());
-        devices.add(new Device());
-
+        auth = FirebaseAuth.getInstance();
+        devicePresenter = new DevicePresenterImpl(getActivity(), auth);
         deviceAdapter = new DeviceAdapter(devices);
+        devicePresenter.getAllDevices(deviceAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         listDevice.setLayoutManager(layoutManager);

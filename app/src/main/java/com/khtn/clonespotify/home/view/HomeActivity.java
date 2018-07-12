@@ -15,8 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.khtn.clonespotify.R;
+import com.khtn.clonespotify.api.YoutubeApi;
 import com.khtn.clonespotify.detail.view.VideoDetailActivity;
 import com.khtn.clonespotify.model.Video;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,6 +78,13 @@ public class HomeActivity extends AppCompatActivity implements VideoTopListFragm
     }
 
     private void init() {
+        //test
+        /*YoutubeApi youtubeApi = new YoutubeApi();
+        try {
+            youtubeApi.listMostPopularVideos();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
         initLayout();
         btn_setting.setOnClickListener(v->{
             showSettingFragment();

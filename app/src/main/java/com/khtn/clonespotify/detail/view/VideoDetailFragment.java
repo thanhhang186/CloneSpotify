@@ -15,11 +15,14 @@ import android.widget.TextView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.khtn.clonespotify.R;
 import com.khtn.clonespotify.detail.adapter.VideoDetailAdapter;
+import com.khtn.clonespotify.detail.presenter.VideoPresenter;
+import com.khtn.clonespotify.detail.presenter.VideoPresenterImpl;
 import com.khtn.clonespotify.home.interfaces.OnBackPressedListener;
 import com.khtn.clonespotify.model.Video;
-import com.khtn.clonespotify.utils.Contants;
+import com.khtn.clonespotify.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,8 @@ public class VideoDetailFragment extends Fragment implements YouTubePlayer.OnIni
     private Callback callback;
     private List<Video> videos;
     private VideoDetailAdapter videoDetailAdapter;
+    private VideoPresenter videoPresenter;
+    private FirebaseAuth auth;
     @BindView(R.id.tv_devices)
     TextView tvDevices;
 
@@ -79,7 +84,7 @@ public class VideoDetailFragment extends Fragment implements YouTubePlayer.OnIni
 
     private void initYoutubePlayer() {
         youtubeView = (YouTubePlayerSupportFragment) getChildFragmentManager().findFragmentById(R.id.youtube_view);
-        youtubeView.initialize(Contants.YOUTUBE_API_KEY, this);
+        youtubeView.initialize(Constants.YOUTUBE_API_KEY, this);
     }
 
     @Override
@@ -100,7 +105,15 @@ public class VideoDetailFragment extends Fragment implements YouTubePlayer.OnIni
         youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
             @Override
             public void onLoading() {
-                youTubePlayer.pause();
+                auth = FirebaseAuth.getInstance();
+                youTubePlayer.play();
+                videoPresenter = new VideoPresenterImpl(getActivity(), auth);
+                Video video = new Video();
+                video.setPause(false);
+                video.setPlay(true);
+                video.setNameSong("aaa");
+                video.setUrl("gUsB57zR52c");
+                videoPresenter.setVideoCurrent(video);
             }
 
             @Override

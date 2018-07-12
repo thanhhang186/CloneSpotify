@@ -6,4 +6,5 @@ public interface SignInView {
     void loginError();
     void setProgressVisibility(boolean visibility);
     void isLogin(boolean isLogin);
+    void loadHomeAct();
 }

@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 
 import com.khtn.clonespotify.sign.view.SignInFragment;
 import com.khtn.clonespotify.sign.view.SignUpFragment;
+import com.khtn.clonespotify.utils.PrefUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,5 +36,11 @@ public class MainActivity extends AppCompatActivity implements LaunchFragment.Ca
     public void onSignUpPage() {
         SignUpFragment signUpFragment = new SignUpFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container,signUpFragment,SIGN_UP_FRAGMENT).commit();
+    }
+
+    public void isLogin(){
+        if(PrefUtils.getUserId(MainActivity.this) != null && !PrefUtils.getUserId(MainActivity.this).equals("")){
+            //
+        }
     }
 }
