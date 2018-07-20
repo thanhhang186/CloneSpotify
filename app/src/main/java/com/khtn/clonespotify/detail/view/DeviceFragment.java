@@ -13,10 +13,12 @@ import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.khtn.clonespotify.R;
+import com.khtn.clonespotify.database.FirebaseManager;
 import com.khtn.clonespotify.detail.adapter.DeviceAdapter;
 import com.khtn.clonespotify.detail.presenter.DevicePresenter;
 import com.khtn.clonespotify.detail.presenter.DevicePresenterImpl;
 import com.khtn.clonespotify.model.Device;
+import com.khtn.clonespotify.utils.PrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DeviceFragment extends Fragment {
+public class DeviceFragment extends Fragment implements OnClickDeviceListener {
     @BindView(R.id.btn_close)
     ImageView btnClose;
 
@@ -52,22 +54,25 @@ public class DeviceFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_device, container, false);
         ButterKnife.bind(this, view);
-        initData();
+        initLayoutReferences();
         return view;
     }
 
-    private void initData() {
-        auth = FirebaseAuth.getInstance();
-        devicePresenter = new DevicePresenterImpl(getActivity(), auth);
-        deviceAdapter = new DeviceAdapter(devices);
-        devicePresenter.getAllDevices(deviceAdapter);
-
+    private void initLayoutReferences() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         listDevice.setLayoutManager(layoutManager);
         listDevice.setHasFixedSize(true);
         listDevice.setItemAnimator(new DefaultItemAnimator());
 
+        devices = new ArrayList<>();
+        deviceAdapter = new DeviceAdapter(this, devices);
         listDevice.setAdapter(deviceAdapter);
+        FirebaseManager.getInstance().getDeviceListByID(PrefUtils.getUserId(getActivity()), deviceAdapter);
+
     }
 
+    @Override
+    public void onVideoClicked(Device device) {
+
+    }
 }

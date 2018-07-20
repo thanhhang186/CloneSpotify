@@ -4,19 +4,60 @@ import java.io.Serializable;
 
 public class Video implements Serializable {
     private String videoId;
+    private String deviceId;
     private String url;
     private String nameSong;
     private String author;
     private boolean isLike;
     private long totalTime;
+    private String describe;
     private boolean isPause;
     private boolean isPlay;
+    private int time;
+    private long totalView;
 
-    public boolean isPlay() {
+    public long getTotalView() {
+        return totalView;
+    }
+
+    public void setTotalView(long totalView) {
+        this.totalView = totalView;
+    }
+
+    public Video(int time) {
+        this.time = time;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
+
+    public String getDeviceId() {
+
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public boolean isIsPlay() {
         return isPlay;
     }
 
-    public void setPlay(boolean play) {
+    public void setIsPlay(boolean play) {
         isPlay = play;
     }
 
@@ -59,11 +100,11 @@ public class Video implements Serializable {
         this.author = author;
     }
 
-    public boolean isLike() {
+    public boolean isIsLike() {
         return isLike;
     }
 
-    public void setLike(boolean like) {
+    public void setIsLike(boolean like) {
         isLike = like;
     }
 
@@ -75,11 +116,11 @@ public class Video implements Serializable {
         this.totalTime = totalTime;
     }
 
-    public boolean isPause() {
+    public boolean isIsPause() {
         return isPause;
     }
 
-    public void setPause(boolean pause) {
+    public void setIsPause(boolean pause) {
         isPause = pause;
     }
 

@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.khtn.clonespotify.R;
+import com.khtn.clonespotify.detail.abstracts.VideoAbstract;
 import com.khtn.clonespotify.model.Video;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class VideoDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class VideoDetailAdapter extends VideoAbstract{
     private Context context;
     private List<Video> videos;
     private static int TYPE_HEADER = 0;
@@ -28,6 +29,17 @@ public class VideoDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public VideoDetailAdapter(List<Video> videos) {
         this.videos = videos;
     }
+
+    @Override
+    public List<Video> getVideos() {
+        return this.videos;
+    }
+
+    @Override
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
+    }
+
     public class VideoHeaderViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.title_header)
         TextView title;
@@ -44,10 +56,10 @@ public class VideoDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ButterKnife.bind(this, itemView);
         }
         public void bind(Video video){
-            title.setText("[Vietsub] Sorry 对不起 Xin Lỗi Anh - 胡艾彤 (Hồ Ngải Đồng) ♪Song Lục♪");
-            views.setText("2000 views");
+            title.setText(video.getNameSong());
+            views.setText(video.getTotalView()+" views");
             btnShowDetailVideo.setOnClickListener(v->{
-                description.setText("If you like their music, please support genuine version. If the copyright owner considers the video infringed, please contact us and we will completely delete the video.");
+                description.setText(video.getDescription());
                 if(isShowDescripion == false){
                     isShowDescripion = true;
                     line.setVisibility(View.VISIBLE);
@@ -81,12 +93,9 @@ public class VideoDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public void bind(Video video){
             loadingImageProgressBar.setVisibility(View.GONE);
             poster.setImageResource(R.drawable.bg);
-            title.setText("Reality - Lost Frequencies | Lyrics + Vietsub.");
-            description.setText("A.e tuần mới tràn đầy nhé. :3 Tải gì vào đây nha :\n" +
-                    "https://drive.google.com/drive/folder...\n" +
-                    "\n" +
-                    "Góp ý nhiệt tình đừng ngần ngại nha ae. Bài này chém gió kinh lắm. Cảm tạ ae.  :))");
-
+            title.setText(video.getNameSong());
+            description.setText(video.getDescription());
+            views.setText(video.getTotalView() + " views");
         }
     }
 

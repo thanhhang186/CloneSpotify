@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import com.khtn.clonespotify.R;
+import com.khtn.clonespotify.database.FirebaseManager;
 import com.khtn.clonespotify.model.Video;
+import com.khtn.clonespotify.utils.PrefUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,6 +19,7 @@ public class VideoDetailActivity extends AppCompatActivity implements VideoDetai
     FrameLayout container;
     public static final String VIDEO_DETAIL_FRAGMENT = "VideoDeatilFragment";
     public static final String DEVICE_FRAGMENT = "DeviceFragment";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,20 +30,20 @@ public class VideoDetailActivity extends AppCompatActivity implements VideoDetai
 
     private void loadVideoDetailFragment() {
         VideoDetailFragment videoDetailFragment = new VideoDetailFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.container_detail,videoDetailFragment,VIDEO_DETAIL_FRAGMENT).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_detail, videoDetailFragment, VIDEO_DETAIL_FRAGMENT).commit();
     }
 
     @Override
     public void onClickVideoRecommend(Video video) {
         Intent intent = new Intent(this, VideoDetailActivity.class);
-        intent.putExtra("video",video);
+        intent.putExtra("video", video);
         startActivity(intent);
     }
 
     @Override
     public void loadDeviceFragment() {
         DeviceFragment deviceFragment = new DeviceFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.container_detail,deviceFragment,DEVICE_FRAGMENT).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_detail, deviceFragment, DEVICE_FRAGMENT).commit();
     }
 
     @Override
@@ -48,5 +51,11 @@ public class VideoDetailActivity extends AppCompatActivity implements VideoDetai
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseManager.getInstance().removeDeviceControlID(PrefUtils.getUserId(this),PrefUtils.getDeviceControlId(this));
+        PrefUtils.removeDeviceControlId(this);
+        FirebaseManager.getInstance().removeVideoCurrent(PrefUtils.getUserId(this));
+    }
 }

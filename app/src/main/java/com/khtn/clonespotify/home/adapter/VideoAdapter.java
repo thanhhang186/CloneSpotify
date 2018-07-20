@@ -44,11 +44,8 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         public void bind(final Video video){
             loadingImageProgressBar.setVisibility(View.GONE);
             poster.setImageResource(R.drawable.bg);
-            title.setText("Reality - Lost Frequencies | Lyrics + Vietsub.");
-            tvDescription.setText("A.e tuần mới tràn đầy nhé. :3 Tải gì vào đây nha :\n" +
-                    "https://drive.google.com/drive/folder...\n" +
-                    "\n" +
-                    "Góp ý nhiệt tình đừng ngần ngại nha ae. Bài này chém gió kinh lắm. Cảm tạ ae.  :))");
+            title.setText(video.getNameSong());
+            tvDescription.setText(video.getDescription());
             itemView.setOnClickListener(v-> homeView.onVideoClicked(video));
         }
     }

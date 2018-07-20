@@ -38,6 +38,7 @@ public class SignInPresenterImpl implements SignInPresenter {
         } else {
             FirebaseManager.getInstance().signInUser(context, signInView, email, password);
             addDevice();
+
         }
 
     }
@@ -50,6 +51,7 @@ public class SignInPresenterImpl implements SignInPresenter {
         Log.i(TAG, "device_name: " + DeviceName.getDeviceName());
         Log.i(TAG, "user_id: " + PrefUtils.getUserId(context));
         FirebaseManager.getInstance().addDevice(PrefUtils.getUserId(context), device);
+        PrefUtils.putDeviceCurrentId(context, android_id);
     }
 
     @Override

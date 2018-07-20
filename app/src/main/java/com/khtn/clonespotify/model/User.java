@@ -7,10 +7,18 @@ public class User {
     private String id;
     private String email;
     private List<Device> devices;
-    private int deviceCurrentID;
     private List<Video> favorVideoList;
     private List<Video> recommderVideo;
     private String currentVideoID;
+    private String deviceControlID;
+
+    public String getDeviceControlID() {
+        return deviceControlID;
+    }
+
+    public void setDeviceControlID(String deviceControlID) {
+        this.deviceControlID = deviceControlID;
+    }
 
     public String getCurrentVideoID() {
         return currentVideoID;
@@ -64,14 +72,6 @@ public class User {
 
     public void setDevices(List<Device> devices) {
         this.devices = devices;
-    }
-
-    public int getDeviceCurrentID() {
-        return deviceCurrentID;
-    }
-
-    public void setDeviceCurrentID(int deviceCurrentID) {
-        this.deviceCurrentID = deviceCurrentID;
     }
 
     public List<Video> getFavorVideoList() {

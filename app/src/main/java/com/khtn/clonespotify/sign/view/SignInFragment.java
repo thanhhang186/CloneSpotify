@@ -24,6 +24,7 @@ import com.khtn.clonespotify.sign.presenter.SignInPresenter;
 import com.khtn.clonespotify.sign.presenter.SignInPresenterImpl;
 import com.khtn.clonespotify.sign.presenter.SignUpPresenter;
 import com.khtn.clonespotify.sign.presenter.SignUpPresenterImpl;
+import com.khtn.clonespotify.utils.PrefUtils;
 import com.khtn.clonespotify.utils.Utils;
 
 import butterknife.BindInt;
@@ -97,16 +98,19 @@ public class SignInFragment extends Fragment implements SignInView {
     @Override
     public void showVadidationError() {
             Utils.showMessage(getActivity(), "Please enter a valid email address and password !");
+        setProgressVisibility(false);
     }
 
     @Override
     public void loginSuccess() {
         Utils.showMessage(getActivity(), "Login Success !");
+        setProgressVisibility(false);
     }
 
     @Override
     public void loginError() {
         Utils.showMessage(getActivity(), "Login Error !");
+        setProgressVisibility(false);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.khtn.clonespotify.home.view.HomeView;
+import com.khtn.clonespotify.utils.PrefUtils;
 
 public class HomePresenterImpl implements HomePresenter{
     private HomeView homeView;
@@ -30,6 +31,7 @@ public class HomePresenterImpl implements HomePresenter{
     public void setView(HomeView homeView) {
         this.homeView = homeView;
     }
+
     private boolean isViewAttached() {
         return homeView != null;
     }

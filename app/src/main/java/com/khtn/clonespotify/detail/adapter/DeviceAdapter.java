@@ -13,9 +13,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.khtn.clonespotify.R;
+import com.khtn.clonespotify.database.FirebaseManager;
+import com.khtn.clonespotify.detail.view.OnClickDeviceListener;
 import com.khtn.clonespotify.model.Device;
+import com.khtn.clonespotify.utils.PrefUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,8 +29,13 @@ import butterknife.ButterKnife;
 public class DeviceAdapter extends DeviceAbstract  {
     private Context context;
     private List<Device> devices;
+    private OnClickDeviceListener onClickDeviceListener;
 
     public DeviceAdapter(List<Device> devices) {
+        this.devices = devices;
+    }
+    public DeviceAdapter(OnClickDeviceListener onClickDeviceListener, List<Device> devices) {
+        this.onClickDeviceListener = onClickDeviceListener;
         this.devices = devices;
     }
 
@@ -49,28 +59,29 @@ public class DeviceAdapter extends DeviceAbstract  {
             ButterKnife.bind(this,itemView);
         }
         public void bind(Device device){
-            if(true){
+            if(device.getDeviceID().equals(PrefUtils.getDeviceControlId(context))){
                 imgDevice.setImageResource(R.drawable.smartphone_active);
-                nameDevice.setText("HTC Desire 728g");
+                nameDevice.setText(device.getDeviceName());
                 nameDevice.setTextColor(ContextCompat.getColor(context, R.color.colorGreen));
             } else {
+                nameDevice.setText(device.getDeviceName());
                 imgDevice.setImageResource(R.drawable.smartphone);
+                nameDevice.setOnClickListener(v->{
+                    createAlertDialog(context, device);
+                });
             }
-            nameDevice.setOnClickListener(v->{
-                showPopupConfirmDevice();
-            });
+
         }
 
-        private void showPopupConfirmDevice() {
-            createAlertDialog(context, "\"HTC Desire 728g\"");
-        }
-        private void createAlertDialog(Context context, String nameDevice) {
+        private void createAlertDialog(Context context, Device device) {
             new AlertDialog.Builder(context)
                     .setTitle("")
-                    .setMessage("Would you like to listen to music on device " + nameDevice)
+                    .setMessage("Would you like to listen to music on device " + device.getDeviceName() )
                     .setNegativeButton(context.getString(R.string.cancel), (dialog, which) -> {
                     })
                     .setPositiveButton(context.getString(R.string.ok), (dialog, which) -> {
+                        FirebaseManager.getInstance().setDeviceControlID(PrefUtils.getUserId(context), device.getDeviceID());
+
                     })
                     .show();
         }

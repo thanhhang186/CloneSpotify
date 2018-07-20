@@ -1,9 +1,12 @@
 package com.khtn.clonespotify.database;
 
 import android.app.Activity;
+import android.content.Context;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.youtube.player.YouTubePlayer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -12,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.khtn.clonespotify.detail.abstracts.VideoAbstract;
 import com.khtn.clonespotify.detail.adapter.DeviceAbstract;
 import com.khtn.clonespotify.model.Device;
 import com.khtn.clonespotify.model.User;
@@ -21,7 +25,9 @@ import com.khtn.clonespotify.utils.Constants;
 import com.khtn.clonespotify.utils.PrefUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FirebaseManager {
     private static final String TAG = "firebase";
@@ -30,6 +36,8 @@ public class FirebaseManager {
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseAuth mAuth;
     public List<Device> devices = new ArrayList<>();
+    public List<Video> videos = new ArrayList<>();
+    public Video video;
 
     public void initFirebase() {
         mAuth = FirebaseAuth.getInstance();
@@ -89,6 +97,9 @@ public class FirebaseManager {
                         User user = postSnapshot.getValue(User.class);
                         Log.i(TAG, "id: " + user.getId());
                         PrefUtils.putUserID(activity, user.getId());
+                        if(user.getDeviceControlID() != null){
+                            PrefUtils.putDeviceControlId(activity, user.getDeviceControlID());
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -122,30 +133,6 @@ public class FirebaseManager {
                     }
                 });
     }
-    public void getDeviceListByID(String userID, DeviceAbstract deviceAdapter){
-        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference(Constants.DATABASE_DEVICES);
-        Query myQuery = mFirebaseDatabase.child(userID);
-        myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    String value = dataSnapshot1.getValue(String.class);
-
-                    Device device = new Device();
-                    device.setDeviceName(value);
-                    devices.add(device);
-                    int size = (devices == null) ? 0 : devices.size();
-                    Log.i(TAG, "size_device_list: " + size);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        Log.i(TAG, "devices: " + devices.size());
-    }
 
     public List<Video> getVideoTopList(){
         List<Video> videos = new ArrayList<>();
@@ -155,6 +142,52 @@ public class FirebaseManager {
     public void setVideoCurrent(String userID, Video video){
             DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference(Constants.DATABASE_VIDEO);
             mFirebaseDatabase.child(userID).setValue(video);
+    }
+
+    public void getVideoCurrent(Context context, String userID, ValueEventListener valueEventListener){
+        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference(Constants.DATABASE_VIDEO);
+        Query myQuery = mFirebaseDatabase.child(userID);
+        myQuery.addValueEventListener(valueEventListener);
+    }
+
+    public void getDeviceListByID(String userID, DeviceAbstract deviceAdapter){
+        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference(Constants.DATABASE_DEVICES);
+        Query myQuery = mFirebaseDatabase.child(userID);
+        myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    String value = dataSnapshot1.getValue(String.class);
+                    Log.i(TAG, "device_name: " + value);
+                    Device device = new Device();
+                    device.setDeviceName(value);
+                    String deviceID = dataSnapshot1.getKey();
+                    device.setDeviceID(deviceID);
+                    Log.i(TAG, "device_id " + deviceID);
+                    deviceAdapter.getDevices().add(device);
+                    deviceAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void setDeviceControlID(String userID, String deviceID){
+        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference(Constants.DATABASE_USERS);
+        mFirebaseDatabase.child(userID).child("deviceControlID").setValue(deviceID);
+    }
+
+    public void removeDeviceControlID(String userID, String deviceID){
+        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference(Constants.DATABASE_USERS);
+        mFirebaseDatabase.child(userID).child("deviceControlID").removeValue();
+    }
+    public void removeVideoCurrent(String userID){
+        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference(Constants.DATABASE_VIDEO);
+        mFirebaseDatabase.child(userID).removeValue();
     }
 
 

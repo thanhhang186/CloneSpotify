@@ -46,5 +46,16 @@ dependencies {
     implementation 'com.google.apis:google-api-services-youtube:v3-rev182-1.22.0'
     implementation group: 'com.google.code.gson', name: 'gson', version: '1.7.2'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.4.4'
+
+    implementation 'com.google.android.gms:play-services-auth:11.6.0'
+    implementation 'pub.devrel:easypermissions:0.3.0'
+    implementation('com.google.api-client:google-api-client-android:1.23.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    implementation('com.google.apis:google-api-services-youtube:v3-rev204-1.23.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    implementation 'dev.dworks.libs:volleyplus:0.1.4'
+    implementation 'com.google.code.gson:gson:2.8.2'
 }
 apply plugin: 'com.google.gms.google-services'
